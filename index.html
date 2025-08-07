@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>羽球雙打分組系統</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            background: #f9f9f9;
+        }
+
+        .section h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .input-group input, .input-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .input-group textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        .button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .results {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f0f8ff;
+            border-radius: 10px;
+            border: 2px solid #667eea;
+        }
+
+        .round {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .round h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .court {
+            margin: 10px 0;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            border-left: 3px solid #28a745;
+        }
+
+        .team {
+            display: inline-block;
+            background: #e3f2fd;
+            padding: 5px 10px;
+            margin: 2px;
+            border-radius: 15px;
+            font-size: 14px;
+            border: 1px solid #2196f3;
+        }
+
+        .vs {
+            margin: 0 10px;
+            font-weight: bold;
+            color: #f44336;
+        }
+
+        .download-btn {
+            background: #28a745;
+            margin-top: 20px;
+        }
+
+        .download-btn:hover {
+            background: #218838;
+        }
+
+        .info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #2196f3;
+        }
+
+        .info h3 {
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+
+        .info ul {
+            margin-left: 20px;
+        }
+
+        .info li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏸 羽球雙打分組系統</h1>
+            <p>智能分組，公平競賽</p>
+        </div>
+
+        <div class="content">
+            <div class="info">
+                <h3>📋 使用說明</h3>
+                <ul>
+                    <li>輸入男生和女生的名字（每行一個名字）</li>
+                    <li>設定場地數量</li>
+                    <li>如有預先分組的選手，請在固定分組欄位中輸入（格式：選手1,選手2）</li>
+                    <li>系統會自動產生10輪比賽，每輪包含所有場地的對戰組合</li>
+                    <li>系統會盡量安排混雙比賽，並確保每組上場次數平均</li>
+                    <li><strong>🎲 每次點擊「產生比賽表」都會隨機產生不同的結果！</strong></li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>👥 選手名單</h2>
+                <div class="input-group">
+                    <label for="malePlayers">男生選手（每行一個名字）：</label>
+                    <textarea id="malePlayers" placeholder="例如：&#10;小明&#10;小華&#10;小李"></textarea>
+                </div>
+                <div class="input-group">
+                    <label for="femalePlayers">女生選手（每行一個名字）：</label>
+                    <textarea id="femalePlayers" placeholder="例如：&#10;小美&#10;小芳&#10;小麗"></textarea>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🏟️ 場地設定</h2>
+                <div class="input-group">
+                    <label for="courtCount">場地數量：</label>
+                    <input type="number" id="courtCount" min="1" max="10" value="3">
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🔒 固定分組（可選）</h2>
+                <div class="input-group">
+                    <label for="fixedGroups">預先分組的選手（每組一行，用逗號分隔）：</label>
+                    <textarea id="fixedGroups" placeholder="例如：&#10;小明,小美&#10;小華,小芳"></textarea>
+                </div>
+            </div>
+
+            <button class="button" onclick="generateTournament()">🎯 產生比賽表</button>
+            <button class="button download-btn" onclick="downloadResults()" id="downloadBtn" style="display: none;">📥 下載比賽表</button>
+
+            <div id="results" class="results" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
